@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterModule} from '@angular/router';
 
 @Component({
-  standalone: true,
-  imports: [RouterModule],
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.less',
+    standalone: true,
+    imports: [RouterModule],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.less',
 })
 export class AppComponent {
-  title = 'terralink-hr';
+    title = 'terralink-hr';
 }
