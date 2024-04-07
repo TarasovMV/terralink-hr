@@ -16,15 +16,16 @@
         class="content"
         [@enterLeave]
     >
-        <button
-            (click)="showSidebar.set(true)"
-            (tuiActiveZoneChange)="!$event && showSidebar.set(false)"
-        >
-            <resume-preview
-                *tuiSidebar="showSidebar(); direction: 'right'"
-                (closeClick)="showSidebar.set(false)"
-            ></resume-preview>
-        </button>
+        <!--        TODO: for test-->
+        <!--        <button-->
+        <!--            (click)="showSidebar.set(true)"-->
+        <!--            (tuiActiveZoneChange)="!$event && showSidebar.set(false)"-->
+        <!--        >-->
+        <!--            <resume-preview-->
+        <!--                *tuiSidebar="showSidebar(); direction: 'right'"-->
+        <!--                (closeClick)="showSidebar.set(false)"-->
+        <!--            ></resume-preview>-->
+        <!--        </button>-->
         <div class="chat-wrapper">
             <div class="chat-container">
                 <div class="empty-chat-item"></div>
