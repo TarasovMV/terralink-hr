@@ -1,0 +1,93 @@
+@if (showPreview()) {
+    <info [@enterLeaveSize]></info>
+}
+
+@if (showPreview()) {
+    <div class="content">
+        <search-button
+            style="margin: auto"
+            (click)="start()"
+        ></search-button>
+    </div>
+}
+
+@if (!showPreview()) {
+    <tui-scrollbar
+        class="content"
+        [@enterLeave]
+    >
+        <div class="chat-wrapper">
+            <div class="chat-container">
+                <div class="empty-chat-item"></div>
+                @for (message of chatMessages(); track message) {
+                    <chat-item
+                        class="tui-space_bottom-4 item-{{ message.side }}"
+                        [@enterLeaveSize]
+                        [data]="message.data"
+                    ></chat-item>
+
+                    @if (message.actionStep; as step) {
+                        @if (messageAction().get(message) === 'tag') {
+                            <div class="tag-container">
+                                @for (tag of step.tags; track tag) {
+                                    <div
+                                        class="tag"
+                                        (click)="chooseTag(tag, step.type, message)"
+                                    >
+                                        {{ tag | tagMapper: step.type }}
+                                    </div>
+                                }
+                                <div
+                                    class="tag"
+                                    (click)="restart()"
+                                >
+                                    Искать заново
+                                </div>
+                            </div>
+                        }
+
+                        @if (messageAction().get(message) === 'result') {
+                            @if (resultResumes().get(message); as resumes) {
+                                <div class="resume-container">
+                                    @for (res of resumes; track res) {
+                                        <resume-item [data]="res"></resume-item>
+                                    }
+                                </div>
+                                <div class="tag-container tui-space_top-4">
+                                    <div
+                                        class="tag"
+                                        (click)="restart()"
+                                    >
+                                        Искать заново
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                }
+                <div class="empty-chat-item"></div>
+                <div class="empty-chat-item"></div>
+                <div class="empty-chat-item"></div>
+                <div class="empty-chat-item"></div>
+            </div>
+        </div>
+    </tui-scrollbar>
+    <img
+        alt="logo"
+        src="assets/logo-bw.png"
+        class="logo"
+    />
+    <img
+        alt="close-button"
+        src="assets/cross.png"
+        class="close-button"
+        (click)="showPreview.set(true)"
+    />
+}
+
+@if (showPreview()) {
+    <div
+        class="footer"
+        [@enterLeaveSize]
+    ></div>
+}

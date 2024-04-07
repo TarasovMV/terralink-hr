@@ -8,16 +8,34 @@
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:application",
-            "outputs": ["{options.outputPath}"],
+            "outputs": [
+                "{options.outputPath}"
+            ],
             "options": {
                 "outputPath": "dist/terralink-hr",
                 "index": "./src/index.html",
                 "browser": "./src/main.ts",
-                "polyfills": ["zone.js"],
+                "polyfills": [
+                    "zone.js"
+                ],
                 "tsConfig": "./tsconfig.app.json",
                 "inlineStyleLanguage": "less",
-                "assets": ["./src/favicon.ico", "./src/assets"],
-                "styles": ["./src/styles.less"],
+                "assets": [
+                    "./src/favicon.ico",
+                    "./src/assets",
+                    {
+                        "glob": "**/*",
+                        "input": "node_modules/@taiga-ui/icons/src",
+                        "output": "assets/taiga-ui/icons"
+                    }
+                ],
+                "styles": [
+                    "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
+                    "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
+                    "node_modules/@taiga-ui/styles/taiga-ui-global.less",
+                    "./src/styles.less",
+                    "./src/variables.less"
+                ],
                 "scripts": []
             },
             "configurations": {
@@ -65,12 +83,16 @@
         "lint": {
             "executor": "@nx/eslint:lint",
             "options": {
-                "lintFilePatterns": ["./src"]
+                "lintFilePatterns": [
+                    "./src"
+                ]
             }
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/{projectName}"],
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectName}"
+            ],
             "options": {
                 "jestConfig": "jest.config.ts"
             }
