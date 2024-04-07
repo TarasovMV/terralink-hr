@@ -16,6 +16,15 @@
         class="content"
         [@enterLeave]
     >
+        <button
+            (click)="showSidebar.set(true)"
+            (tuiActiveZoneChange)="!$event && showSidebar.set(false)"
+        >
+            <resume-preview
+                *tuiSidebar="showSidebar(); direction: 'right'"
+                (closeClick)="showSidebar.set(false)"
+            ></resume-preview>
+        </button>
         <div class="chat-wrapper">
             <div class="chat-container">
                 <div class="empty-chat-item"></div>
@@ -50,7 +59,16 @@
                             @if (resultResumes().get(message); as resumes) {
                                 <div class="resume-container">
                                     @for (res of resumes; track res) {
-                                        <resume-item [data]="res"></resume-item>
+                                        <resume-item
+                                            [data]="res"
+                                            (click)="showSidebar.set(true)"
+                                            (tuiActiveZoneChange)="!$event && showSidebar.set(false)"
+                                        >
+                                            <resume-preview
+                                                *tuiSidebar="showSidebar(); direction: 'right'"
+                                                (closeClick)="showSidebar.set(false)"
+                                            ></resume-preview>
+                                        </resume-item>
                                     }
                                 </div>
                                 <div class="tag-container tui-space_top-4">
@@ -77,6 +95,7 @@
         src="assets/logo-bw.png"
         class="logo"
     />
+
     <img
         alt="close-button"
         src="assets/cross.png"

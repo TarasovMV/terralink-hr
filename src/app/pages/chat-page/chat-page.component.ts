@@ -21,6 +21,9 @@ import {TagMapper} from '../../pipes/tag-mapper';
 import {ApiService} from '../../services/api.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ResumeItemComponent} from './components/resume-item/resume-item.component';
+import {TuiSidebarModule} from '@taiga-ui/addon-mobile';
+import {TuiActiveZoneModule} from '@taiga-ui/cdk';
+import {ResumePreviewComponent} from './components/resume-preview/resume-preview.component';
 
 interface ChatMessage {
     data: ChatItemData;
@@ -51,8 +54,11 @@ const TAG_STEPS = [
         SearchButtonComponent,
         ChatItemComponent,
         TuiScrollbarModule,
+        TuiSidebarModule,
         TagMapper,
         ResumeItemComponent,
+        TuiActiveZoneModule,
+        ResumePreviewComponent,
     ],
     animations: [enterLeaveAnimation, enterLeaveSizeAnimation],
     providers: [TagMapper],
@@ -84,6 +90,8 @@ export class ChatPageComponent {
         return STEPS[idx];
     });
 
+    readonly showSidebar = signal<boolean>(false);
+
     start(): void {
         this.clear();
         this.showPreview.set(false);
@@ -99,6 +107,7 @@ export class ChatPageComponent {
     }
 
     restart(): void {
+        this.clear();
         this.pushChatMessage({
             data: {
                 author: CURRENT_USER,

@@ -1,0 +1,33 @@
+@switch (status()) {
+    @case ('loading') {
+        <tui-loader
+            size="xxl"
+            style="margin: auto; width: 100%"
+        ></tui-loader>
+    }
+    @case ('success') {
+        @if (data(); as data) {
+            <img
+                alt=""
+                src="{{ data.avatarPath }}"
+                class="avatar tui-space_bottom-8"
+            />
+            <div class="text-name tui-space_bottom-8">{{ data.name }}</div>
+            <div class="text-description">{{ data.description }}</div>
+        }
+    }
+    @case ('error') {
+        <div
+            style="margin: auto"
+            class="text-error"
+        >
+            Произошла ошибка, попробуйте позже
+        </div>
+    }
+}
+
+<img
+    src="assets/cross-black.png"
+    class="close"
+    (click)="closeClick.emit()"
+/>

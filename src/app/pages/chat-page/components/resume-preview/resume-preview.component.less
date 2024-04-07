@@ -1,0 +1,44 @@
+:host {
+    display: flex;
+    flex-flow: column;
+    min-height: var(--max-height);
+    width: 100%;
+    padding: 4rem;
+    color: var(--color-black);
+    box-sizing: border-box;
+}
+
+.close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+}
+
+.text {
+    &-name {
+        font-weight: 600;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    &-description {
+        font-weight: 400;
+        font-size: 1rem;
+    }
+
+    &-error {
+        font-weight: 600;
+        font-size: 2rem;
+        text-align: center;
+    }
+}
