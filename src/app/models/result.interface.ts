@@ -1,4 +1,6 @@
-export type Result = ResultItem[];
+export interface Result {
+    content: ResultItem[];
+}
 
 export interface ResultItem {
     id: number;

@@ -9,7 +9,7 @@
         @if (data(); as data) {
             <img
                 alt=""
-                src="{{ data.avatarPath }}"
+                src="{{ data.avatar }}"
                 class="avatar tui-space_bottom-8"
             />
             <div class="text-name tui-space_bottom-8">{{ data.name }}</div>
@@ -29,5 +29,5 @@
 <img
     src="assets/cross-black.png"
     class="close"
-    (click)="closeClick.emit()"
+    (click)="close()"
 />

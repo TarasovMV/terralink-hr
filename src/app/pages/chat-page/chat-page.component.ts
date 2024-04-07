@@ -90,7 +90,7 @@ export class ChatPageComponent {
         return STEPS[idx];
     });
 
-    readonly showSidebar = signal<boolean>(false);
+    readonly showSidebar = signal(new Map<ResultItem, boolean>());
 
     start(): void {
         this.clear();
@@ -140,6 +140,10 @@ export class ChatPageComponent {
         }
     }
 
+    setShowResume(res: ResultItem, value: boolean): void {
+        this.showSidebar.update(m => m.set(res, value));
+    }
+
     private clear(): void {
         this.result = [];
         this.chatMessages.set([]);
@@ -160,7 +164,7 @@ export class ChatPageComponent {
                         return;
                     }
 
-                    this.resultResumes.update(m => m.set(message, res));
+                    this.resultResumes.update(m => m.set(message, res.content));
                 },
             });
     }

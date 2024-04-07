@@ -22,6 +22,7 @@ import {ApiService} from '../../../../services/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResumePreviewComponent implements OnInit {
+    @Input({required: true}) id!: number;
     @Output() closeClick = new EventEmitter<void>();
 
     private readonly apiService = inject(ApiService);
@@ -30,12 +31,18 @@ export class ResumePreviewComponent implements OnInit {
     readonly status = signal<'loading' | 'success' | 'error'>('loading');
 
     ngOnInit(): void {
-        this.apiService.getResume(1).subscribe({
+        this.apiService.getResume(this.id).subscribe({
             next: res => {
+                res.avatar = `data:image/png;base64,` + res.avatar;
+
                 this.data.set(res);
                 this.status.set('success');
             },
             error: () => this.status.set('error'),
         });
+    }
+
+    close(): void {
+        setTimeout(() => this.closeClick.emit());
     }
 }

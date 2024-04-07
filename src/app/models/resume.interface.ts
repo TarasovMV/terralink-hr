@@ -1,6 +1,6 @@
 export interface Resume {
     id: number;
-    avatarPath: string;
+    avatar: string;
     name: string;
     description: string;
 }

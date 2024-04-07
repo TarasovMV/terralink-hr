@@ -62,12 +62,13 @@
                                     @for (res of resumes; track res) {
                                         <resume-item
                                             [data]="res"
-                                            (click)="showSidebar.set(true)"
-                                            (tuiActiveZoneChange)="!$event && showSidebar.set(false)"
+                                            (click)="setShowResume(res, true)"
+                                            (tuiActiveZoneChange)="!$event && setShowResume(res, false)"
                                         >
                                             <resume-preview
-                                                *tuiSidebar="showSidebar(); direction: 'right'"
-                                                (closeClick)="showSidebar.set(false)"
+                                                *tuiSidebar="!!showSidebar().get(res); direction: 'right'"
+                                                [id]="res.id"
+                                                (closeClick)="setShowResume(res, false)"
                                             ></resume-preview>
                                         </resume-item>
                                     }
