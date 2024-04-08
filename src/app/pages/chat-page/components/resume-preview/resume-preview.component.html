@@ -13,7 +13,10 @@
                 class="avatar tui-space_bottom-8"
             />
             <div class="text-name tui-space_bottom-8">{{ data.name }}</div>
-            <div class="text-description">{{ data.description }}</div>
+            <div
+                class="text-description"
+                [innerHTML]="data.description"
+            ></div>
         }
     }
     @case ('error') {
