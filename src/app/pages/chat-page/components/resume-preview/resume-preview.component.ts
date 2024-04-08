@@ -10,13 +10,13 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Resume} from '../../../../models';
-import {TuiLoaderModule} from '@taiga-ui/core';
+import {TuiLoaderModule, TuiScrollbarModule} from '@taiga-ui/core';
 import {ApiService} from '../../../../services/api.service';
 
 @Component({
     selector: 'resume-preview',
     standalone: true,
-    imports: [CommonModule, TuiLoaderModule],
+    imports: [CommonModule, TuiLoaderModule, TuiScrollbarModule],
     templateUrl: './resume-preview.component.html',
     styleUrl: './resume-preview.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
