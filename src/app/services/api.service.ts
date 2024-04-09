@@ -5,7 +5,7 @@ import {RESULT} from '../constants';
 import {RESUME} from '../constants/resume.const';
 import {HttpClient} from '@angular/common/http';
 
-const URL = `https://f1b2-181-88-252-127.ngrok-free.app`;
+const URL = `https://orchestra.terralink.ru/resume/api`;
 
 @Injectable({
     providedIn: 'root',
