@@ -33,15 +33,23 @@
                         [data]="message.data"
                     ></chat-item>
 
-                    @if (message.actionStep; as step) {
+                    @if (message.stepType; as stepType) {
                         @if (messageAction().get(message) === 'tag') {
                             <div class="tag-container">
-                                @for (tag of step.tags; track tag) {
+                                @for (tag of getTagsByStepType(stepType); track tag) {
                                     <div
                                         class="tag"
-                                        (click)="chooseTag(tag, step.type, message)"
+                                        (click)="chooseTag(tag, stepType, message)"
                                     >
-                                        {{ tag | tagMapper: step.type }}
+                                        {{ tag | tagMapper: stepType }}
+                                    </div>
+                                }
+                                @if (canChooseAll(stepType)) {
+                                    <div
+                                        class="tag"
+                                        (click)="chooseTag('all', stepType, message)"
+                                    >
+                                        Не имеет значения
                                     </div>
                                 }
                                 <div

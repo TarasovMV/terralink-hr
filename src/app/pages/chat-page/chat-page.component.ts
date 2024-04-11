@@ -16,7 +16,7 @@ import {enterLeaveAnimation, enterLeaveSizeAnimation} from '../../animations';
 import {ChatItemComponent} from './components/chat-item/chat-item.component';
 import {BOT_USER, CURRENT_USER, STEPS} from '../../constants';
 import {TuiScrollbarComponent, TuiScrollbarModule} from '@taiga-ui/core';
-import {ChatItemData, ResultItem, Step, StepType} from '../../models';
+import {ChatItemData, ResultItem, StepType} from '../../models';
 import {TagMapper} from '../../pipes/tag-mapper';
 import {ApiService} from '../../services/api.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -28,7 +28,7 @@ import {ResumePreviewComponent} from './components/resume-preview/resume-preview
 interface ChatMessage {
     data: ChatItemData;
     side: 'left' | 'right';
-    actionStep?: Step;
+    stepType?: StepType;
 }
 
 type MessageAction = 'tag' | 'result';
@@ -36,6 +36,7 @@ type MessageAction = 'tag' | 'result';
 const INITIAL_STEP_INDEX = -1;
 const CHAT_DELAY = 1_000;
 const TAG_STEPS = [
+    StepType.Sphere,
     StepType.University,
     StepType.Specialization,
     StepType.Experience,
@@ -120,7 +121,11 @@ export class ChatPageComponent {
     }
 
     chooseTag(tag: string, stepType: StepType, message: ChatMessage): void {
-        this.result.push(tag);
+        if (tag === 'all') {
+            this.result.push(...this.getTagsByStepType(stepType));
+        } else {
+            this.result.push(tag);
+        }
 
         this.messageAction.update(m => m.set(message, null));
         this.pushChatMessage({
@@ -131,7 +136,11 @@ export class ChatPageComponent {
             side: 'left',
         });
 
-        this.goToNextStep();
+        if (stepType === StepType.Sphere && !this.getTagsByStepType(StepType.Specialization).length) {
+            this.goToStep(this.stepIdx() + 2);
+        } else {
+            this.goToNextStep();
+        }
 
         if (this.currentStep()?.type === StepType.ResultWaiting) {
             this.getResult();
@@ -142,6 +151,20 @@ export class ChatPageComponent {
 
     setShowResume(res: ResultItem, value: boolean): void {
         this.showSidebar.update(m => m.set(res, value));
+    }
+
+    canChooseAll(type: StepType): boolean {
+        return [StepType.University, StepType.SearchStatus, StepType.EmploymentType].includes(type);
+    }
+
+    getTagsByStepType(type: StepType): string[] {
+        if (type === StepType.Specialization) {
+            const sphere = this.result[0];
+
+            return STEPS.find(s => s.type === StepType.Specialization)?.data.tags[sphere] ?? [];
+        }
+
+        return STEPS.find(s => s.type === type)?.data.tags ?? [];
     }
 
     private clear(): void {
@@ -193,7 +216,7 @@ export class ChatPageComponent {
                     author: BOT_USER,
                     message: this.currentStep()?.message || '',
                 },
-                actionStep: step && {...step},
+                stepType: step?.type,
                 side: 'right',
             },
             true,

@@ -6,7 +6,7 @@ import {StepType} from '../models';
     standalone: true,
 })
 export class TagMapper implements PipeTransform {
-    readonly specializationMap = {
+    private readonly sphereMap = {
         ['database']: 'Специалист по базам данных',
         ['mobile_development']: 'Мобильная разработка',
         ['cybersecurity']: 'Кибербезопасность',
@@ -15,16 +15,31 @@ export class TagMapper implements PipeTransform {
         ['machine_learning']: 'Машинное обучение и искусственный интеллект',
         ['ar/vr_development']: 'AR/VR разработка',
         ['game_development']: 'Разработка игр',
-        ['активно ищу работу']: 'В активном поиске',
-        ['рассматриваю предложения']: 'Рассматривает предложения',
         ['ar/vr разработчик']: 'AR/VR-разработчик',
     } as const;
 
+    private readonly searchStatusMap = {
+        ['активно ищу работу']: 'В активном поиске',
+        ['рассматриваю предложения']: 'Рассматривает предложения',
+    } as const;
+
+    private readonly allMap = {
+        ['all']: 'Не имеет значения'
+    } as const;
+
     transform(value: string, type: StepType): string {
-        if (type !== StepType.Specialization) {
-            return value;
+        if (this.allMap[value as keyof typeof this.allMap]) {
+            return this.allMap[value as keyof typeof this.allMap];
         }
 
-        return this.specializationMap[value as keyof typeof this.specializationMap] || '';
+        if (type === StepType.Sphere) {
+            return this.sphereMap[value as keyof typeof this.sphereMap] || '';
+        }
+
+        if (type === StepType.SearchStatus) {
+            return this.searchStatusMap[value as keyof typeof this.searchStatusMap] || '';
+        }
+
+        return value;
     }
 }

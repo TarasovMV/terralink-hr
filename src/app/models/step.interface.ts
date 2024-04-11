@@ -1,7 +1,7 @@
 import {StepType} from './step-type.enum';
 
-export interface Step {
+export interface Step<T> {
     type: StepType;
     message: string;
-    tags: string[];
+    data?: T;
 }
