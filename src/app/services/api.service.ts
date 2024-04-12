@@ -15,7 +15,7 @@ export class ApiService {
 
     getResult(query: string): Observable<Result> {
         // return of(RESULT).pipe(delay(3_000));
-        return this.http.post<Result>(`${URL}/resume/find?query=${query}`, {});
+        return this.http.post<Result>(`${URL}/resume/find`, {query});
     }
 
     getResume(id: number): Observable<Resume> {
